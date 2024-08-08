@@ -16,22 +16,20 @@ from typing import List
 class Solution:
     def minOperations(self, boxes: str) -> List[int]:
         result = []
-        i = 0
-        j = 0
-        sum = 0
-        while len(result) < len(boxes):
-            if j < len(boxes):
-                if j != i and boxes[j] != '0':
-                    delta = j - i
+        hashmap = {
+            i: True
+            for i in range(len(boxes))
+            if boxes[i] != '0'
+        }
+        for i in range(len(boxes)):
+            sum = 0
+            for key, _ in hashmap.items():
+                if key != i:
+                    delta = key - i
                     if delta < 0:
                         delta *= -1
                     sum += delta
-                j += 1
-            else:
-                result.append(sum)
-                sum = 0
-                j = 0
-                i += 1
+            result.append(sum)
         return result
 
 
